@@ -25,7 +25,7 @@ type Redis struct {
 type RabbitMQ struct {
 	Host     string `json:"host"`
 	Port     string `json:"port"`
-	User     string `json:"user"`
+	Username string `json:"username"`
 	Password string `json:"password"`
 }
 
@@ -65,7 +65,7 @@ func NewConfig() *Config {
 		RabbitMQ: RabbitMQ{
 			Host:     viper.GetString("RABBITMQ_HOST"),
 			Port:     viper.GetString("RABBITMQ_PORT"),
-			User:     viper.GetString("RABBITMQ_USER"),
+			Username: viper.GetString("RABBITMQ_USER"),
 			Password: viper.GetString("RABBITMQ_PASSWORD"),
 		},
 		Supabase: Supabase{
