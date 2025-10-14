@@ -43,8 +43,8 @@ func (u *UserRepository) AssignUserToRole(ctx context.Context, userID uint, role
 	}
 
 	userRole := model.UserRole{
-		UserId: userID,
-		RoleId: roleID,
+		UserID: userID,
+		RoleID: roleID,
 	}
 
 	return u.db.WithContext(ctx).Create(&userRole).Error
@@ -108,8 +108,8 @@ func (u *UserRepository) EditAssignUserToRole(ctx context.Context, assignRoleID 
 		return err
 	}
 
-	userRole.UserId = userID
-	userRole.RoleId = roleID
+	userRole.UserID = userID
+	userRole.RoleID = roleID
 
 	return u.db.WithContext(ctx).Save(&userRole).Error
 

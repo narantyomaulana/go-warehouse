@@ -4,8 +4,8 @@ import "time"
 
 type UserRole struct {
 	ID        uint      `json:"id" gorm:"primaryKey;autoIncrement"`
-	UserId    uint      `json:"user_id" gorm:"not null"`
-	RoleId    uint      `json:"role_id" gorm:"not null"`
+	UserID    uint      `json:"user_id" gorm:"not null"`
+	RoleID    uint      `json:"role_id" gorm:"not null"`
 	User      User      `gorm:"foreignKey:UserID"`
 	Role      Role      `gorm:"foreignKey:RoleID"`
 	CreatedAt time.Time `json:"created_at"`
