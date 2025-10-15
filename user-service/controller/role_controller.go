@@ -1,8 +1,8 @@
-package controllers
+package controller
 
 import (
-	"micro-warehouse/user-service/controllers/request"
-	"micro-warehouse/user-service/controllers/response"
+	"micro-warehouse/user-service/controller/request"
+	"micro-warehouse/user-service/controller/response"
 	"micro-warehouse/user-service/model"
 	"micro-warehouse/user-service/pkg/conv"
 	"micro-warehouse/user-service/pkg/validator"
