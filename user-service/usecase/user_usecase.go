@@ -90,7 +90,7 @@ func (u *userUsecase) EditAssignUserToRole(ctx context.Context, assignRoleID uin
 }
 
 // GetAllUserRoles implements UserUsecaseInterface.
-func (u *userUsecase) GetAllUserRoles(ctx context.Context, page int, limit int, search string, sortBy string, sortOrder string) ([]model.UserRole, int64, error) {
+func (u *userUsecase) GetAllUserRoles(ctx context.Context, page, limit int, search, sortBy, sortOrder string) ([]model.UserRole, int64, error) {
 	return u.userRepo.GetAllUserRoles(ctx, page, limit, search, sortBy, sortOrder)
 }
 

@@ -138,7 +138,7 @@ func (u *userController) EditAssignUserToRole(c *fiber.Ctx) error {
 		})
 	}
 
-	userRoleIDStr := c.Params("userRoleID")
+	userRoleIDStr := c.Params("id")
 	userRoleID := conv.StringToUint(userRoleIDStr)
 
 	if err := u.userUsecase.EditAssignUserToRole(ctx, userRoleID, req.UserID, req.RoleID); err != nil {
@@ -358,7 +358,7 @@ func (u *userController) GetUserByRoleName(c *fiber.Ctx) error {
 // GetUserRoleByID implements UserControllerInterface.
 func (u *userController) GetUserRoleByID(c *fiber.Ctx) error {
 	ctx := c.Context()
-	userRoleIDStr := c.Params("userRoleID")
+	userRoleIDStr := c.Params("id")
 	userRoleID := conv.StringToUint(userRoleIDStr)
 
 	userRole, err := u.userUsecase.GetUserRoleByID(ctx, userRoleID)
@@ -373,7 +373,6 @@ func (u *userController) GetUserRoleByID(c *fiber.Ctx) error {
 		"message": "User role retrieved successfully",
 		"data":    userRole,
 	})
-
 }
 
 // UpdateUser implements UserControllerInterface.
