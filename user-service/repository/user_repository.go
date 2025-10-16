@@ -29,12 +29,12 @@ type UserRepositoryInterface interface {
 	GetAllUserRoles(ctx context.Context, page, limit int, search, sortBy, sortOrder string) ([]model.UserRole, int64, error)
 }
 
-type UserRepository struct {
+type userRepository struct {
 	db *gorm.DB
 }
 
 // AssignUserToRole implements UserRepositoryInterface.
-func (u *UserRepository) AssignUserToRole(ctx context.Context, userID uint, roleID uint) error {
+func (u *userRepository) AssignUserToRole(ctx context.Context, userID uint, roleID uint) error {
 	select {
 	case <-ctx.Done():
 		log.Errorf("[UserRepository] DeleteUser - 1: %v", ctx.Err())
@@ -51,7 +51,7 @@ func (u *UserRepository) AssignUserToRole(ctx context.Context, userID uint, role
 }
 
 // CreateUser implements UserRepositoryInterface.
-func (u *UserRepository) CreateUser(ctx context.Context, user model.User) (*model.User, error) {
+func (u *userRepository) CreateUser(ctx context.Context, user model.User) (*model.User, error) {
 	select {
 	case <-ctx.Done():
 		log.Errorf("[UserRepository] CreateUser - 1: %v", ctx.Err())
@@ -73,7 +73,7 @@ func (u *UserRepository) CreateUser(ctx context.Context, user model.User) (*mode
 }
 
 // DeleteUser implements UserRepositoryInterface.
-func (u *UserRepository) DeleteUser(ctx context.Context, id uint) error {
+func (u *userRepository) DeleteUser(ctx context.Context, id uint) error {
 	select {
 	case <-ctx.Done():
 		log.Errorf("[UserRepository] DeleteUser - 1: %v", ctx.Err())
@@ -92,7 +92,7 @@ func (u *UserRepository) DeleteUser(ctx context.Context, id uint) error {
 }
 
 // EditAssignUserToRole implements UserRepositoryInterface.
-func (u *UserRepository) EditAssignUserToRole(ctx context.Context, assignRoleID uint, userID uint, roleID uint) error {
+func (u *userRepository) EditAssignUserToRole(ctx context.Context, assignRoleID uint, userID uint, roleID uint) error {
 	select {
 	case <-ctx.Done():
 		log.Errorf("[UserRepository] EditAssignUserToRole - 1: %v", ctx.Err())
@@ -116,7 +116,7 @@ func (u *UserRepository) EditAssignUserToRole(ctx context.Context, assignRoleID 
 }
 
 // GetAllUserRoles implements UserRepositoryInterface.
-func (u *UserRepository) GetAllUserRoles(ctx context.Context, page int, limit int, search string, sortBy string, sortOrder string) ([]model.UserRole, int64, error) {
+func (u *userRepository) GetAllUserRoles(ctx context.Context, page int, limit int, search string, sortBy string, sortOrder string) ([]model.UserRole, int64, error) {
 	select {
 	case <-ctx.Done():
 		log.Errorf("[UserRepository] GetAllUserRoles - 1: %v", ctx.Err())
@@ -168,7 +168,7 @@ func (u *UserRepository) GetAllUserRoles(ctx context.Context, page int, limit in
 }
 
 // GetAllUsers implements UserRepositoryInterface.
-func (u *UserRepository) GetAllUsers(ctx context.Context, page int, limit int, search string, sortBy string, sortOrder string) ([]model.User, int64, error) {
+func (u *userRepository) GetAllUsers(ctx context.Context, page int, limit int, search string, sortBy string, sortOrder string) ([]model.User, int64, error) {
 	select {
 	case <-ctx.Done():
 		log.Errorf("[UserRepository] GetAllUsers - 1: %v", ctx.Err())
@@ -224,7 +224,7 @@ func (u *UserRepository) GetAllUsers(ctx context.Context, page int, limit int, s
 }
 
 // GetUserByEmail implements UserRepositoryInterface.
-func (u *UserRepository) GetUserByEmail(ctx context.Context, email string) (*model.User, error) {
+func (u *userRepository) GetUserByEmail(ctx context.Context, email string) (*model.User, error) {
 	select {
 	case <-ctx.Done():
 		log.Errorf("[UserRepository] GetUserByEmail - 1: %v", ctx.Err())
@@ -232,7 +232,6 @@ func (u *UserRepository) GetUserByEmail(ctx context.Context, email string) (*mod
 	default:
 	}
 
-	// Get Paginated Data
 	modelUsers := model.User{}
 	if err := u.db.WithContext(ctx).Select("id", "name", "email", "password", "photo", "phone", "created_at").
 		Where("email = ?", email).
@@ -241,13 +240,11 @@ func (u *UserRepository) GetUserByEmail(ctx context.Context, email string) (*mod
 		log.Errorf("[UserRepository] GetUserByEmail - 2: %v", err)
 		return nil, err
 	}
-
 	return &modelUsers, nil
-
 }
 
 // GetUserByID implements UserRepositoryInterface.
-func (u *UserRepository) GetUserByID(ctx context.Context, id uint) (*model.User, error) {
+func (u *userRepository) GetUserByID(ctx context.Context, id uint) (*model.User, error) {
 	select {
 	case <-ctx.Done():
 		log.Errorf("[UserRepository] GetUserByID - 1: %v", ctx.Err())
@@ -268,7 +265,7 @@ func (u *UserRepository) GetUserByID(ctx context.Context, id uint) (*model.User,
 }
 
 // GetUserByRoleName implements UserRepositoryInterface.
-func (u *UserRepository) GetUserByRoleName(ctx context.Context, roleName string) ([]model.User, error) {
+func (u *userRepository) GetUserByRoleName(ctx context.Context, roleName string) ([]model.User, error) {
 	select {
 	case <-ctx.Done():
 		log.Errorf("[UserRepository] GetUserByRoleName - 1: %v", ctx.Err())
@@ -298,7 +295,7 @@ func (u *UserRepository) GetUserByRoleName(ctx context.Context, roleName string)
 }
 
 // GetUserRoleByID implements UserRepositoryInterface.
-func (u *UserRepository) GetUserRoleByID(ctx context.Context, assignRoleID uint) (*model.UserRole, error) {
+func (u *userRepository) GetUserRoleByID(ctx context.Context, assignRoleID uint) (*model.UserRole, error) {
 	select {
 	case <-ctx.Done():
 		log.Errorf("[UserRepository] GetUserRoleByID - 1: %v", ctx.Err())
@@ -320,7 +317,7 @@ func (u *UserRepository) GetUserRoleByID(ctx context.Context, assignRoleID uint)
 }
 
 // UpdateUser implements UserRepositoryInterface.
-func (u *UserRepository) UpdateUser(ctx context.Context, user model.User) error {
+func (u *userRepository) UpdateUser(ctx context.Context, user model.User) error {
 	select {
 	case <-ctx.Done():
 		log.Errorf("[UserRepository] UpdateUser - 1: %v", ctx.Err())
@@ -350,5 +347,5 @@ func (u *UserRepository) UpdateUser(ctx context.Context, user model.User) error 
 }
 
 func NewUserRepository(db *gorm.DB) UserRepositoryInterface {
-	return &UserRepository{db: db}
+	return &userRepository{db: db}
 }

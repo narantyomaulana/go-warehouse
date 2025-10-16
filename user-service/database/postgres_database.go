@@ -35,7 +35,7 @@ func ConnectionPostgres(cfg configs.Config) (*Postgres, error) {
 	SeedManager(db)
 
 	sqlDB.SetMaxIdleConns(cfg.SqlDB.DBMaxOpenConns)
-	sqlDB.SetMaxOpenConns(cfg.SqlDB.DBMaxIdleConns) 
+	sqlDB.SetMaxOpenConns(cfg.SqlDB.DBMaxIdleConns)
 
 	return &Postgres{DB: db}, nil
 }
